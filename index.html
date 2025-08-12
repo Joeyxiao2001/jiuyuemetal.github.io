@@ -17,17 +17,53 @@
   <style>
     :root { --bg:#0b0c10; --fg:#f4f6f8; --muted:#aab2bd; --brand:#4aa3df; --card:#14161b; }
     *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+    html {
+      scroll-behavior: smooth; /* 平滑滚动 */
+      scroll-padding-top: 88px; /* 为固定导航栏留出空间 */
+    }
+    body {
+      scroll-behavior: smooth;
+      scroll-padding-top: 88px;
+    }
+    /* 确保页面初始状态 */
+    body, html {
+      overflow-x: hidden; /* 防止水平滚动 */
+    }
+    /* 重置可能的默认滚动行为 */
+    * {
+      scroll-margin-top: 88px; /* 为固定导航栏留出空间 */
+    }
+    /* 防止页面加载时的意外滚动 */
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 88px;
+    }
     a{color:var(--brand);text-decoration:none} a:hover{text-decoration:underline}
-    .container{max-width:1080px;margin:0 auto;padding:0 20px}
+    .container{max-width:1080px;margin:0 auto;padding:0 12px}
     header{position:sticky;top:0;background:rgba(11,12,16,.85);backdrop-filter:saturate(150%) blur(6px);border-bottom:1px solid #1f232b;z-index:20}
-    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-    .brand{display:flex;align-items:center;gap:12px;font-weight:700}
-    .brand img{width:32px;height:32px;border-radius:8px}
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0; /* 移除原有内边距 */
+      height:88px; /* 设置导航栏高度为 logo 高度 + padding */
+    }
+    .brand{display:flex;align-items:center;gap:18px;font-weight:700}
+    .brand img{
+      height:72px; /* 固定高度 */
+      width:120px; /* 固定宽度，形成长方形 */
+      border-radius:8px;
+      margin-right:8px;
+      background-color: white; /* 白色背景填充 */
+      object-fit: contain; /* 保持图片比例，空白部分用背景色填充 */
+      padding: 0px; /* 内边距，让logo周围有白色边框 */
+      box-sizing: border-box; /* 确保padding包含在宽高中 */
+    }
     .menu{display:flex;gap:18px;align-items:center}
     .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;border:1px solid #2a2f39;background:#171a20;color:var(--fg);cursor:pointer}
     .btn:hover{border-color:#3a4150}
     .lang{border:1px solid #2a2f39;background:#0f1116;border-radius:10px;padding:6px 10px;color:var(--fg)}
-    .hero{padding:72px 0 32px;border-bottom:1px solid #1f232b}
+    .hero{padding:88px 0 32px;border-bottom:1px solid #1f232b}
     .hero h1{font-size:40px;line-height:1.15;margin:0 0 12px}
     .hero p{color:var(--muted);margin:0 0 24px}
     .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
@@ -41,12 +77,385 @@
     .contact form{display:grid;gap:12px}
     input,textarea{width:100%;padding:12px 14px;border-radius:10px;border:1px solid #2a2f39;background:#0f1116;color:var(--fg)}
     footer{padding:28px 0;color:#97a2ad}
+    
+    /* 关于我们部分的美化样式 */
+    .about-content {
+      max-width: none; /* 移除宽度限制，防止文字提前换行 */
+      margin: 0; /* 移除居中对齐 */
+      text-align: left;
+      padding-left: 0; /* 确保没有额外的左内边距 */
+      margin-left: 0; /* 与其他部分保持一致 */
+    }
+    
+    .about-section {
+      margin-bottom: 32px;
+      padding: 0;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+    }
+    
+    .about-section h3 {
+      color: var(--brand);
+      font-size: 22px;
+      margin: 0 0 16px 0;
+      font-weight: 600;
+      text-align: left;
+      position: relative;
+      padding-left: 0; /* 与其他部分保持一致 */
+    }
+    
+    .about-section h3::before {
+      content: '';
+      width: 4px;
+      height: 22px;
+      background: var(--brand);
+      border-radius: 2px;
+      position: absolute;
+      left: -8px; /* 装饰条位置调整 */
+      top: 0;
+    }
+    
+    .about-section p {
+      margin: 0 0 20px 0;
+      line-height: 1.8;
+      color: var(--muted);
+      text-align: left;
+      font-size: 16px;
+      padding-left: 0; /* 与其他部分保持一致 */
+      margin-left: 0;
+      box-sizing: border-box;
+      word-wrap: normal; /* 防止文字提前换行 */
+      white-space: normal; /* 正常换行 */
+      overflow-wrap: normal; /* 防止强制换行 */
+    }
+    
+    .about-section p:last-child {
+      margin-bottom: 0;
+    }
+    
+    .about-highlight {
+      color: var(--fg);
+      font-weight: 500;
+    }
+    
+    .about-list {
+      margin: 16px 0;
+      padding-left: 20px;
+    }
+    
+    .about-list li {
+      margin-bottom: 8px;
+      line-height: 1.6;
+      color: var(--muted);
+      position: relative;
+    }
+    
+    .about-list li::before {
+      content: '•';
+      color: var(--brand);
+      font-weight: bold;
+      position: absolute;
+      left: -15px;
+    }
+    
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+    
+    .about-item {
+      background: rgba(74, 163, 223, 0.1);
+      border: 1px solid rgba(74, 163, 223, 0.2);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    
+    .about-item strong {
+      color: var(--brand);
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    
+    .about-item span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+    
+    @media (max-width: 768px) {
+      .about-section {
+        padding: 0;
+        margin-bottom: 24px;
+      }
+      
+      .about-section h3 {
+        font-size: 20px;
+      }
+      
+      .about-section p {
+        font-size: 15px;
+      }
+      
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 12px; /* 小屏幕保持较小边距 */
+      }
+    }
     @media (max-width:900px){ .grid{grid-template-columns:1fr 1fr} .cols{grid-template-columns:1fr} }
-    @media (max-width:600px){ .grid{grid-template-columns:1fr} .hero h1{font-size:30px}}
+    @media (max-width:600px){ 
+      .grid{grid-template-columns:1fr} 
+      .hero h1{font-size:30px}
+      .brand img{
+        width:100px; /* 小屏幕下稍微缩小宽度 */
+        height:60px; /* 小屏幕下稍微缩小高度 */
+      }
+      .nav{
+        height:76px; /* 调整导航栏高度 */
+      }
+      .hero{
+        padding:76px 0 32px; /* 调整hero上边距 */
+      }
+    }
     .tag{display:inline-block;margin-right:8px;background:#0f1620;border:1px solid #203043;color:#9fc6eb;padding:6px 10px;border-radius:999px;font-size:12px}
     .badge{font-size:12px;color:#9eb0c0}
     .muted{color:var(--muted)}
     .hidden{display:none}
+    
+    /* 产品轮播样式 */
+    .products-carousel {
+      position: relative;
+      overflow: hidden;
+      height: 400px;
+      margin: 20px 0;
+    }
+    
+    .carousel-container {
+      display: flex;
+      transition: transform 0.8s ease-in-out;
+      height: 100%;
+    }
+    
+    .carousel-slide {
+      min-width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    
+    .carousel-card {
+      background: linear-gradient(135deg, rgba(20, 22, 27, 0.9), rgba(11, 12, 16, 0.95));
+      border: 1px solid #2a2f39;
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+      height: 320px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      transform: scale(0.95);
+      transition: all 0.5s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .carousel-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.15;
+      z-index: -1;
+      transition: opacity 0.5s ease;
+      filter: brightness(0.8) contrast(1.2); /* 优化图片显示效果 */
+    }
+    
+    .carousel-card.stainless::before {
+      background-image: url('/assets/stainless-bg.png'); /* 不锈钢背景图 */
+    }
+    
+    .carousel-card.alloy::before {
+      background-image: url('/assets/alloy-bg.png'); /* 合金钢背景图 */
+    }
+    
+    .carousel-card.custom::before {
+      background-image: url('/assets/custom-bg.png'); /* 定制件背景图 */
+    }
+    
+    .carousel-card.active {
+      transform: scale(1);
+      border-color: var(--brand);
+      box-shadow: 0 25px 80px rgba(74, 163, 223, 0.3);
+    }
+    
+    .carousel-card.active::before {
+      opacity: 0.25;
+    }
+    
+    .carousel-card .tag {
+      font-size: 14px;
+      padding: 8px 16px;
+      margin-bottom: 20px;
+      background: rgba(74, 163, 223, 0.2);
+      border: 1px solid rgba(74, 163, 223, 0.4);
+      color: var(--brand);
+      border-radius: 25px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    
+    .carousel-card h3 {
+      margin: 0 0 20px 0;
+      font-size: 28px;
+      color: var(--fg);
+      font-weight: 700;
+      line-height: 1.2;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .carousel-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.6;
+      max-width: 500px;
+      opacity: 0.9;
+    }
+    
+    .carousel-nav {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 30px;
+    }
+    
+    .carousel-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #2a2f39;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+    
+    .carousel-dot.active {
+      background: var(--brand);
+      border-color: rgba(74, 163, 223, 0.3);
+      transform: scale(1.2);
+    }
+    
+    .carousel-dot:hover {
+      background: #3a4150;
+      transform: scale(1.1);
+    }
+    
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(11,12,16,0.9);
+      border: 2px solid #2a2f39;
+      color: var(--fg);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    
+    .carousel-arrow:hover {
+      background: var(--brand);
+      border-color: var(--brand);
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 8px 25px rgba(74, 163, 223, 0.4);
+    }
+    
+    .carousel-arrow.prev {
+      left: 30px;
+    }
+    
+    .carousel-arrow.next {
+      right: 30px;
+    }
+    
+    @media (max-width: 768px) {
+      .products-carousel {
+        height: 350px;
+      }
+      
+      .carousel-card {
+        height: 280px;
+        padding: 30px 20px;
+      }
+      
+      .carousel-card h3 {
+        font-size: 24px;
+        margin-bottom: 15px;
+      }
+      
+      .carousel-card p {
+        font-size: 16px;
+      }
+      
+      .carousel-arrow {
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+      }
+      
+      .carousel-arrow.prev {
+        left: 15px;
+      }
+      
+      .carousel-arrow.next {
+        right: 15px;
+      }
+    }
+    
+    /* 卡片动画效果 */
+    @keyframes cardEnter {
+      0% {
+        opacity: 0.8;
+        transform: scale(0.95) translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+    
+    .carousel-card:hover {
+      transform: scale(0.98);
+      border-color: rgba(74, 163, 223, 0.6);
+    }
+    
+    .carousel-card.active:hover {
+      transform: scale(1.02);
+    }
   </style>
 </head>
 <body>
@@ -82,22 +491,37 @@
 
     <section class="section" id="products">
       <h2 data-i18n="products_title">主要产品</h2>
-      <div class="grid">
-        <div class="card">
-          <span class="tag" data-i18n="t_stainless">不锈钢</span>
-          <h3 data-i18n="stainless_title">304/316/201 板卷型材</h3>
-          <p data-i18n="stainless_desc">食品级与海工级不锈钢，支持镜面/拉丝/钛金等表面处理。</p>
+      <div class="products-carousel">
+        <div class="carousel-container">
+          <div class="carousel-slide">
+            <div class="carousel-card stainless">
+              <span class="tag" data-i18n="t_stainless">不锈钢</span>
+              <h3 data-i18n="stainless_title">304/316/201 板卷型材</h3>
+              <p data-i18n="stainless_desc">食品级与海工级不锈钢，支持镜面/拉丝/钛金等表面处理。</p>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="carousel-card alloy">
+              <span class="tag" data-i18n="t_alloy">合金钢</span>
+              <h3 data-i18n="alloy_title">耐热耐磨特种合金</h3>
+              <p data-i18n="alloy_desc">用于化工、能源与机械行业的高性能材料。</p>
+            </div>
+          </div>
+          <div class="carousel-slide">
+            <div class="carousel-card custom">
+              <span class="tag" data-i18n="t_custom">定制件</span>
+              <h3 data-i18n="custom_title">按图加工 · 小批量起订</h3>
+              <p data-i18n="custom_desc">根据图纸或样品生产，提供质检与材料证明。</p>
+            </div>
+          </div>
         </div>
-        <div class="card">
-          <span class="tag" data-i18n="t_alloy">合金钢</span>
-          <h3 data-i18n="alloy_title">耐热耐磨特种合金</h3>
-          <p data-i18n="alloy_desc">用于化工、能源与机械行业的高性能材料。</p>
+        <div class="carousel-nav">
+          <span class="carousel-dot" data-index="0"></span>
+          <span class="carousel-dot" data-index="1"></span>
+          <span class="carousel-dot" data-index="2"></span>
         </div>
-        <div class="card">
-          <span class="tag" data-i18n="t_custom">定制件</span>
-          <h3 data-i18n="custom_title">按图加工 · 小批量起订</h3>
-          <p data-i18n="custom_desc">根据图纸或样品生产，提供质检与材料证明。</p>
-        </div>
+        <button class="carousel-arrow prev" data-i18n="carousel_prev">←</button>
+        <button class="carousel-arrow next" data-i18n="carousel_next">→</button>
       </div>
     </section>
 
@@ -119,12 +543,58 @@
 
     <section class="section" id="about">
       <h2 data-i18n="about_title">关于我们</h2>
-      <p class="muted" data-i18n="about_desc">玖月金属材料有限公司专注不锈钢与金属材料的供应与加工，面向家电、建筑、化工、食品装备等行业客户，产品远销北美、欧洲、东南亚。支持中文与英文沟通。</p>
+      <div class="about-content">
+        <div class="about-section">
+          <h3 data-i18n="about_company_intro">公司简介</h3>
+          <p data-i18n="about_company_desc">玖月金属材料有限公司专注于不锈钢与金属材料的供应与加工，服务家电、建筑、化工、食品装备、机加工等行业客户。我们提供从选材、切割、表面处理到成品交付的一站式方案，产品远销北美、欧洲、东南亚，支持中文与英文专业沟通。</p>
+        </div>
+        
+        <div class="about-section">
+          <h3 data-i18n="about_materials">主营材料</h3>
+          <p>
+            <span class="about-highlight" data-i18n="about_stainless">不锈钢：</span><span data-i18n="about_stainless_desc">304 / 316 / 201（板、卷、型材、管材）</span>。
+            <span class="about-highlight" data-i18n="about_material_options">可选材质：</span><span data-i18n="about_material_options_desc">食品级、海工级；可根据需求定制其他钢种与合金</span>。
+          </p>
+        </div>
+        
+        <div class="about-section">
+          <h3 data-i18n="about_processing">加工与表面</h3>
+          <p>
+            <span class="about-highlight" data-i18n="about_processing_desc">激光/等离子/剪切开料、分条、整平、折弯、焊接、数控精加工</span>。
+            <span class="about-highlight" data-i18n="about_surface">表面处理：</span><span data-i18n="about_surface_desc">镜面（#8）、拉丝/发纹、2B/BA、喷砂、PVD（钛金等）</span>。
+          </p>
+        </div>
+        
+        <div class="about-section">
+          <h3 data-i18n="about_quality">公差与质量</h3>
+          <p>
+            <span class="about-highlight" data-i18n="about_tolerance">公差与质量按需求控制，可提供材质证明（MTC）与检测报告</span>。
+            <span class="about-highlight" data-i18n="about_standards">质量与合规：</span><span data-i18n="about_standards_desc">严格参照 ASTM / EN / JIS 等标准执行</span>。
+            <span class="about-highlight" data-i18n="about_traceability">进料—过程—出货全流程检验与可追溯管理</span>。
+          </p>
+        </div>
+        
+        <div class="about-section">
+          <h3 data-i18n="about_delivery">交付与服务</h3>
+          <p>
+            <span class="about-highlight" data-i18n="about_stock">现货与定制并行，支持小批量与快速打样</span>。
+            <span class="about-highlight" data-i18n="about_trade">多种贸易条款（FOB / CIF / DDP）与全球物流方案</span>。
+            <span class="about-highlight" data-i18n="about_engineering">行业工程师团队，提供选材建议与成本优化</span>。
+          </p>
+        </div>
+        
+        <div class="about-section">
+          <h3 data-i18n="about_commitment">我们的承诺</h3>
+          <p>
+            <span class="about-highlight" data-i18n="about_commitment_desc">我们致力于以稳定品质、可靠交期与透明服务，成为您长期可信赖的金属材料合作伙伴。</span>
+          </p>
+        </div>
+      </div>
     </section>
 
     <section class="section contact" id="contact">
       <h2 data-i18n="contact_title">联系我们</h2>
-      <p class="muted" data-i18n="contact_note">填写表单，我们将在 24 小时内回复。也可直接邮件：sales@example.com</p>
+      <p class="muted" data-i18n="contact_note">填写表单，我们将在 24 小时内回复。也可直接邮件：912989446@qq.com</p>
       <!-- 联系表单：将 action 换成你的表单服务（如 Formspree） -->
       <form action="#" method="post" onsubmit="alert(window.i18n.t('submit_thanks')); return false;">
         <input name="name" placeholder="姓名 / Name" required>
@@ -152,9 +622,15 @@
         t_custom:'定制件', custom_title:'按图加工 · 小批量起订', custom_desc:'根据图纸或样品生产，提供质检与材料证明。',
         services_title:'加工与服务', svc_cut:'激光切割、数控折弯、开平分条', svc_finish:'抛光、拉丝、喷砂、PVD', svc_export:'报关报检、出口包装与物流', svc_oem:'OEM/ODM 协同开发',
         why_title:'为什么选择我们', why_desc:'稳定货源 · 质量追溯 · 价格透明 · 交期可控 · 多语种支持',
-        about_title:'关于我们', about_desc:'玖月金属材料有限公司专注不锈钢与金属材料的供应与加工，面向家电、建筑、化工、食品装备等行业客户，产品远销北美、欧洲、东南亚。支持中文与英文沟通。',
-        contact_title:'联系我们', contact_note:'填写表单，我们将在 24 小时内回复。也可直接邮件：sales@example.com', send:'发送', rights:'保留所有权利。',
-        submit_thanks:'已提交！我们会尽快联系您。'
+        about_title:'关于我们', about_company_intro:'公司简介', about_company_desc:'玖月金属材料有限公司专注于不锈钢与金属材料的供应与加工，服务家电、建筑、化工、食品装备、机加工等行业客户。我们提供从选材、切割、表面处理到成品交付的一站式方案，产品远销北美、欧洲、东南亚，支持中文与英文专业沟通。',
+        about_materials:'主营材料', about_stainless:'不锈钢：', about_stainless_desc:'304 / 316 / 201（板、卷、型材、管材）', about_material_options:'可选材质：', about_material_options_desc:'食品级、海工级；可根据需求定制其他钢种与合金',
+        about_processing:'加工与表面', about_processing_desc:'激光/等离子/剪切开料、分条、整平、折弯、焊接、数控精加工', about_surface:'表面处理：', about_surface_desc:'镜面（#8）、拉丝/发纹、2B/BA、喷砂、PVD（钛金等）',
+        about_quality:'公差与质量', about_tolerance:'公差与质量按需求控制，可提供材质证明（MTC）与检测报告', about_standards:'质量与合规：', about_standards_desc:'严格参照 ASTM / EN / JIS 等标准执行', about_traceability:'进料—过程—出货全流程检验与可追溯管理',
+        about_delivery:'交付与服务', about_stock:'现货与定制并行，支持小批量与快速打样', about_trade:'多种贸易条款（FOB / CIF / DDP）与全球物流方案', about_engineering:'行业工程师团队，提供选材建议与成本优化',
+        about_commitment:'我们的承诺', about_commitment_desc:'我们致力于以稳定品质、可靠交期与透明服务，成为您长期可信赖的金属材料合作伙伴。',
+        contact_title:'联系我们', contact_note:'填写表单，我们将在 24 小时内回复。也可直接邮件：912989446@qq.com', send:'发送', rights:'保留所有权利。',
+        submit_thanks:'已提交！我们会尽快联系您。',
+        carousel_prev:'←', carousel_next:'→'
       },
       'en': {
         brand:'Jiuyue Metal', badge:'One-stop metal supply · Global shipping', hero_title:'Your Reliable Partner in Stainless & Metals', hero_desc:'Sheets, coils, profiles and tubes — in stock and custom-made. Cutting, polishing, laser, and deep processing. Export service ready.',
@@ -164,9 +640,15 @@
         t_custom:'Custom Parts', custom_title:'Made-to-drawing · Low MOQ', custom_desc:'Produce to your drawings or samples with QA reports and certs.',
         services_title:'Processing & Services', svc_cut:'Laser cutting, bending, slitting & leveling', svc_finish:'Polishing, brushing, sandblasting, PVD', svc_export:'Customs, inspection & export logistics', svc_oem:'OEM/ODM Co‑development',
         why_title:'Why Us', why_desc:'Stable supply · Traceable quality · Transparent price · On-time delivery · Multilingual',
-        about_title:'About Us', about_desc:'Jiuyue Metal supplies and processes stainless & metal materials for appliances, construction, chemical and food equipment, serving clients worldwide.',
-        contact_title:'Contact Us', contact_note:'Send us your request. We reply within 24 hours. Or email: sales@example.com', send:'Send', rights:'All rights reserved.',
-        submit_thanks:'Submitted! We will contact you shortly.'
+        about_title:'About Us', about_company_intro:'Company Introduction', about_company_desc:'Jiuyue Metal Materials Co., Ltd. specializes in the supply and processing of stainless steel and metal materials, serving clients in household appliances, construction, chemical, food equipment, and machining industries. We provide one-stop solutions from material selection, cutting, surface treatment to finished product delivery. Our products are exported to North America, Europe, and Southeast Asia, with professional communication support in both Chinese and English.',
+        about_materials:'Main Materials', about_stainless:'Stainless Steel:', about_stainless_desc:'304 / 316 / 201 (Sheets, coils, profiles, and tubes)', about_material_options:'Material Options:', about_material_options_desc:'Food- and marine-grade; other steel grades and alloys can be customized based on requirements.',
+        about_processing:'Processing & Surface', about_processing_desc:'Laser cutting, plasma cutting, shearing, slitting, leveling, bending, welding, CNC precision processing', about_surface:'Surface Treatment:', about_surface_desc:'Mirror (8K), brushed/brushed, 2B/BA, sandblasting, PVD (including titanium, etc.)',
+        about_quality:'Tolerance & Quality', about_tolerance:'Tolerance and quality are controlled according to requirements, and material certificates (MTC) and inspection reports can be provided.', about_standards:'Quality & Compliance:', about_standards_desc:'Strictly follow ASTM / EN / JIS, etc. standards.', about_traceability:'Entire process inspection and traceability management from raw materials to finished products.',
+        about_delivery:'Delivery & Services', about_stock:'Stock and custom-made in parallel, supporting small batches and rapid sample production.', about_trade:'Multiple trade terms (FOB / CIF / DDP) and global logistics solutions.', about_engineering:'Industry engineering teams, providing material selection advice and cost optimization.',
+        about_commitment:'Our Commitment', about_commitment_desc:'We are committed to becoming your long-term reliable metal material partner with stable quality, reliable delivery, and transparent service.',
+        contact_title:'Contact Us', contact_note:'Send us your request. We reply within 24 hours. Or email: 912989446@qq.com', send:'Send', rights:'All rights reserved.',
+        submit_thanks:'Submitted! We will contact you shortly.',
+        carousel_prev:'←', carousel_next:'→'
       }
     };
     const i18n = {
@@ -180,6 +662,180 @@
     i18n.lang = localStorage.getItem('lang')|| (navigator.language.startsWith('zh')?'zh-CN':'en');
     select.value = i18n.lang; i18n.apply();
     document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // 产品轮播功能
+    class ProductCarousel {
+      constructor() {
+        this.container = document.querySelector('.carousel-container');
+        this.slides = document.querySelectorAll('.carousel-slide');
+        this.dots = document.querySelectorAll('.carousel-dot');
+        this.prevBtn = document.querySelector('.carousel-arrow.prev');
+        this.nextBtn = document.querySelector('.carousel-arrow.next');
+        this.currentIndex = 0;
+        this.totalSlides = this.slides.length;
+        this.autoPlayInterval = null;
+        this.autoPlayDelay = 4000; // 4秒自动切换
+        
+        this.init();
+      }
+      
+      init() {
+        this.updateDots();
+        this.startAutoPlay();
+        this.bindEvents();
+        this.updateSlideTransform();
+      }
+      
+      bindEvents() {
+        // 点击指示器
+        this.dots.forEach((dot, index) => {
+          dot.addEventListener('click', () => {
+            this.goToSlide(index);
+            this.resetAutoPlay();
+          });
+        });
+        
+        // 点击箭头
+        this.prevBtn.addEventListener('click', () => {
+          this.prevSlide();
+          this.resetAutoPlay();
+        });
+        
+        this.nextBtn.addEventListener('click', () => {
+          this.nextSlide();
+          this.resetAutoPlay();
+        });
+        
+        // 触摸事件支持
+        let startX = 0;
+        let endX = 0;
+        
+        this.container.addEventListener('touchstart', (e) => {
+          startX = e.touches[0].clientX;
+        });
+        
+        this.container.addEventListener('touchend', (e) => {
+          endX = e.changedTouches[0].clientX;
+          this.handleSwipe(startX, endX);
+        });
+        
+        // 鼠标悬停暂停自动播放
+        this.container.addEventListener('mouseenter', () => {
+          this.pauseAutoPlay();
+        });
+        
+        this.container.addEventListener('mouseleave', () => {
+          this.startAutoPlay();
+        });
+      }
+      
+      goToSlide(index) {
+        this.currentIndex = index;
+        this.updateSlideTransform();
+        this.updateDots();
+      }
+      
+      nextSlide() {
+        this.currentIndex = (this.currentIndex + 1) % this.totalSlides;
+        this.goToSlide(this.currentIndex);
+      }
+      
+      prevSlide() {
+        this.currentIndex = (this.currentIndex - 1 + this.totalSlides) % this.totalSlides;
+        this.goToSlide(this.currentIndex);
+      }
+      
+      updateSlideTransform() {
+        const translateX = -this.currentIndex * 100;
+        this.container.style.transform = `translateX(${translateX}%)`;
+        
+        // 更新卡片激活状态
+        this.slides.forEach((slide, index) => {
+          const card = slide.querySelector('.carousel-card');
+          if (index === this.currentIndex) {
+            card.classList.add('active');
+            // 添加进入动画
+            card.style.animation = 'cardEnter 0.6s ease-out';
+          } else {
+            card.classList.remove('active');
+            card.style.animation = '';
+          }
+        });
+      }
+      
+      updateDots() {
+        this.dots.forEach((dot, index) => {
+          if (index === this.currentIndex) {
+            dot.classList.add('active');
+          } else {
+            dot.classList.remove('active');
+          }
+        });
+      }
+      
+      startAutoPlay() {
+        this.autoPlayInterval = setInterval(() => {
+          this.nextSlide();
+        }, this.autoPlayDelay);
+      }
+      
+      pauseAutoPlay() {
+        if (this.autoPlayInterval) {
+          clearInterval(this.autoPlayInterval);
+          this.autoPlayInterval = null;
+        }
+      }
+      
+      resetAutoPlay() {
+        this.pauseAutoPlay();
+        this.startAutoPlay();
+      }
+      
+      handleSwipe(startX, endX) {
+        const threshold = 50;
+        const diff = startX - endX;
+        
+        if (Math.abs(diff) > threshold) {
+          if (diff > 0) {
+            this.nextSlide();
+          } else {
+            this.prevSlide();
+          }
+          this.resetAutoPlay();
+        }
+      }
+    }
+    
+    // 初始化轮播
+    document.addEventListener('DOMContentLoaded', () => {
+      new ProductCarousel();
+      
+      // 确保页面加载时滚动到顶部
+      window.scrollTo(0, 0);
+      
+      // 强制重置滚动位置（防止某些浏览器的默认行为）
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      }, 100);
+      
+      // 处理锚点链接的滚动
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            const headerHeight = 88; // 导航栏高度
+            const targetPosition = target.offsetTop - headerHeight;
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+    });
   </script>
 
   <!-- 可选：结构化数据，帮助 SEO -->
